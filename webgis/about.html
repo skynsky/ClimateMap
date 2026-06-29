@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>About — ClimateMap</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1D9E75;--teal:#0F6E56;--amber:#EF9F27;--red:#E24B4A;--blue:#378ADD;
+  --bg:#0d1210;--bg2:#141a17;--bg3:#1a2420;
+  --text:#e8f0ed;--text2:#94b5a8;--text3:#5a7a6e;
+  --border:rgba(29,158,117,0.15);--border2:rgba(29,158,117,0.3);
+  --sans:'Inter',sans-serif;--serif:'Playfair Display',serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6}
+a{color:inherit;text-decoration:none}
+
+nav{position:sticky;top:0;z-index:99;background:rgba(13,18,16,0.95);border-bottom:0.5px solid var(--border);padding:0 40px;display:flex;align-items:center;height:60px;gap:24px}
+.nav-logo{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--green)}
+.nav-links{display:flex;gap:4px;margin-left:auto}
+.nav-links a{padding:6px 14px;border-radius:6px;font-size:13px;color:var(--text2);transition:all .2s}
+.nav-links a:hover{color:var(--text);background:var(--bg3)}
+.nav-links a.active{color:var(--green)}
+
+.page-hero{background:var(--bg2);padding:80px 40px 60px;border-bottom:0.5px solid var(--border)}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:var(--green);margin-bottom:12px}
+.page-hero h1{font-family:var(--serif);font-size:clamp(36px,5vw,56px);font-weight:700;margin-bottom:16px;line-height:1.1}
+.page-hero p{font-size:16px;color:var(--text2);max-width:580px;line-height:1.8}
+
+main{max-width:900px;margin:0 auto;padding:80px 40px}
+
+.about-section{margin-bottom:72px}
+.about-section h2{font-family:var(--serif);font-size:30px;font-weight:700;margin-bottom:20px;color:var(--text)}
+.about-section p{font-size:15px;color:var(--text2);line-height:1.85;margin-bottom:16px}
+.about-section p:last-child{margin-bottom:0}
+
+.what-is-gis{background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;padding:36px;margin-bottom:72px}
+.what-is-gis h2{font-family:var(--serif);font-size:26px;font-weight:700;margin-bottom:16px}
+.what-is-gis p{font-size:15px;color:var(--text2);line-height:1.85;margin-bottom:14px}
+
+.gis-components{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:28px}
+.gis-comp{background:var(--bg3);border:0.5px solid var(--border);border-radius:8px;padding:20px}
+.gis-comp-icon{font-size:24px;margin-bottom:10px}
+.gis-comp-title{font-size:14px;font-weight:600;margin-bottom:6px;color:var(--text)}
+.gis-comp-desc{font-size:13px;color:var(--text2);line-height:1.6}
+
+.timeline{margin:28px 0}
+.tl-item{display:flex;gap:20px;margin-bottom:0}
+.tl-left{display:flex;flex-direction:column;align-items:center;width:20px;flex-shrink:0}
+.tl-dot{width:10px;height:10px;border-radius:50%;background:var(--green);flex-shrink:0;margin-top:5px}
+.tl-line{flex:1;width:1px;background:var(--border);margin-top:4px}
+.tl-item:last-child .tl-line{display:none}
+.tl-content{padding-bottom:28px}
+.tl-year{font-size:12px;color:var(--green);font-weight:600;margin-bottom:4px}
+.tl-text{font-size:14px;color:var(--text2);line-height:1.7}
+
+.sources-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:28px}
+.source-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:8px;padding:20px;transition:border-color .2s}
+.source-card:hover{border-color:var(--border2)}
+.source-name{font-size:15px;font-weight:600;margin-bottom:6px;color:var(--text)}
+.source-org{font-size:12px;color:var(--green);margin-bottom:8px}
+.source-desc{font-size:13px;color:var(--text2);line-height:1.6}
+
+.tech-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.pill{background:var(--bg3);border:0.5px solid var(--border);border-radius:20px;padding:6px 14px;font-size:13px;color:var(--text2)}
+
+.cta-block{background:linear-gradient(135deg,var(--bg3) 0%,rgba(29,158,117,0.05) 100%);border:0.5px solid var(--border2);border-radius:12px;padding:48px;text-align:center;margin-top:72px}
+.cta-block h2{font-family:var(--serif);font-size:32px;font-weight:700;margin-bottom:12px}
+.cta-block p{font-size:15px;color:var(--text2);margin-bottom:28px}
+.btn-primary{background:var(--green);color:#fff;padding:14px 28px;border-radius:8px;font-size:14px;font-weight:500;display:inline-block;transition:background .2s}
+.btn-primary:hover{background:var(--teal);color:#fff}
+
+footer{background:var(--bg2);border-top:0.5px solid var(--border);padding:48px 40px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;margin-top:80px}
+.footer-brand .nav-logo{margin-bottom:10px}
+.footer-brand p{font-size:13px;color:var(--text3);line-height:1.7}
+.footer-col h4{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:12px}
+.footer-col a{display:block;font-size:13px;color:var(--text2);margin-bottom:8px;transition:color .2s}
+.footer-col a:hover{color:var(--green)}
+.footer-bottom{background:var(--bg2);padding:16px 40px;border-top:0.5px solid var(--border);text-align:center;font-size:12px;color:var(--text3)}
+
+@media(max-width:768px){
+  nav{padding:0 20px}.nav-links{display:none}
+  .page-hero,.main{padding-left:20px;padding-right:20px}
+  main{padding:60px 20px}
+  footer{grid-template-columns:1fr;padding:40px 20px}
+  .footer-bottom{padding:16px 20px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">ClimateMap</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="map.html">Explore Map</a>
+    <a href="data.html">Data &amp; Charts</a>
+    <a href="about.html" class="active">About</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="eyebrow">About this project</div>
+  <h1>ClimateMap<br/>explained</h1>
+  <p>An educational GIS project mapping the environmental crisis — where the data comes from, how the technology works, and why it matters.</p>
+</div>
+
+<main>
+
+  <!-- What is GIS -->
+  <div class="what-is-gis">
+    <h2>What is GIS?</h2>
+    <p>A <strong style="color:var(--text)">Geographic Information System (GIS)</strong> is a computer-based tool for capturing, storing, analyzing, and displaying data that is linked to a specific location on Earth. GIS lets us ask and answer questions about places and the relationships between them.</p>
+    <p>GIS combines maps with databases. Every point, line, or polygon on a GIS map has attributes — data describing what that feature is. A city on the map might store its population, temperature records, and flood risk score. This lets us do much more than just look at a map: we can filter, compare, calculate, and find patterns across huge datasets.</p>
+    <p>GIS is used in environmental science, urban planning, disaster response, public health, agriculture, conservation, and dozens of other fields. Satellite imagery, sensor networks, and citizen science projects are constantly feeding new data into GIS systems around the world.</p>
+
+    <div class="gis-components">
+      <div class="gis-comp">
+        <div class="gis-comp-icon">🗺️</div>
+        <div class="gis-comp-title">Spatial data</div>
+        <div class="gis-comp-desc">Points, lines, and polygons representing real-world features — cities, rivers, national borders, climate zones.</div>
+      </div>
+      <div class="gis-comp">
+        <div class="gis-comp-icon">🛢️</div>
+        <div class="gis-comp-title">Attribute data</div>
+        <div class="gis-comp-desc">The database behind each feature — temperature readings, CO₂ levels, population data, risk scores.</div>
+      </div>
+      <div class="gis-comp">
+        <div class="gis-comp-icon">🛰️</div>
+        <div class="gis-comp-title">Remote sensing</div>
+        <div class="gis-comp-desc">Satellite and aerial imagery that gives us a view of Earth from above — critical for monitoring change over time.</div>
+      </div>
+      <div class="gis-comp">
+        <div class="gis-comp-icon">📐</div>
+        <div class="gis-comp-title">Spatial analysis</div>
+        <div class="gis-comp-desc">Tools to measure, buffer, overlay, and model relationships — answering "which places are at risk?" or "how far has the flood spread?"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Why climate -->
+  <div class="about-section">
+    <h2>Why climate change?</h2>
+    <p>Climate change is one of the most spatially complex challenges humans have ever faced. Its causes are distributed across the globe — industrial emissions in one country affect weather patterns in another. Its effects are deeply unequal — low-lying nations and the poorest communities bear the heaviest burden despite contributing the least emissions.</p>
+    <p>GIS is an ideal tool for understanding this complexity. Layering temperature data over population density, deforestation maps over carbon-sink potential, and sea level projections over city footprints reveals patterns that numbers alone cannot show. Maps make the abstract tangible: when you see a flood-risk polygon overlaid on Jakarta or Dhaka, the stakes become real.</p>
+    <p>This project visualizes four core dimensions of the climate crisis: rising temperatures, increasing atmospheric CO₂, sea level rise, and deforestation — each mapped with real data from scientific institutions.</p>
+  </div>
+
+  <!-- History of GIS timeline -->
+  <div class="about-section">
+    <h2>A brief history of GIS</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content"><div class="tl-year">1960</div><div class="tl-text">Roger Tomlinson develops the first true GIS — the Canada Geographic Information System — to manage land resource data across the country. He is later called the "father of GIS."</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content"><div class="tl-year">1969</div><div class="tl-text">Environmental Systems Research Institute (Esri) is founded in California. It becomes the world's leading GIS software company, best known for ArcGIS.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content"><div class="tl-year">1990s</div><div class="tl-text">GIS moves to desktop computers and becomes widely used in government, urban planning, and environmental science. GPS satellites begin providing accurate location data.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content"><div class="tl-year">2004</div><div class="tl-text">OpenStreetMap is founded — a crowd-sourced, open-access world map that democratizes geospatial data. It now has over 10 million contributors worldwide.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content"><div class="tl-year">2005</div><div class="tl-text">Google Maps launches, bringing web-based mapping to the mass public. Spatial thinking becomes part of everyday life for billions of people.</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content"><div class="tl-year">2010s–now</div><div class="tl-text">Cloud GIS, open-source tools (QGIS, Leaflet, MapLibre), and satellite constellations like Copernicus and Planet Labs make real-time global environmental monitoring possible from a web browser.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Data sources -->
+  <div class="about-section">
+    <h2>Data sources</h2>
+    <p>ClimateMap draws on publicly available data from the world's leading climate and geospatial institutions. All data is used for educational purposes.</p>
+    <div class="sources-grid">
+      <div class="source-card">
+        <div class="source-name">GISS Surface Temperature</div>
+        <div class="source-org">NASA</div>
+        <div class="source-desc">Global temperature anomaly records from 1880 to present, combining land and ocean measurements.</div>
+      </div>
+      <div class="source-card">
+        <div class="source-name">Mauna Loa CO₂ Record</div>
+        <div class="source-org">NOAA / Scripps</div>
+        <div class="source-desc">Continuous atmospheric CO₂ measurements since 1958, the longest direct record in the world.</div>
+      </div>
+      <div class="source-card">
+        <div class="source-name">Sea Level Satellite Data</div>
+        <div class="source-org">NASA / CNES</div>
+        <div class="source-desc">Global mean sea level from satellite altimetry missions including TOPEX, Jason, and Sentinel.</div>
+      </div>
+      <div class="source-card">
+        <div class="source-name">Global Forest Watch</div>
+        <div class="source-org">World Resources Institute</div>
+        <div class="source-desc">Near-real-time deforestation monitoring using Landsat and MODIS satellite imagery.</div>
+      </div>
+      <div class="source-card">
+        <div class="source-name">Extreme Event Database</div>
+        <div class="source-org">WMO / EM-DAT</div>
+        <div class="source-desc">Catalogue of extreme weather events, disaster impacts, and climate attribution data.</div>
+      </div>
+      <div class="source-card">
+        <div class="source-name">OpenStreetMap</div>
+        <div class="source-org">OpenStreetMap Foundation</div>
+        <div class="source-desc">Open-access base map data including cities, borders, coastlines, and infrastructure.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Technology -->
+  <div class="about-section">
+    <h2>Technology used</h2>
+    <p>This web GIS is built entirely with open-source tools, requiring no proprietary GIS software or paid data subscriptions.</p>
+    <div class="tech-pills">
+      <span class="pill">HTML5 / CSS3</span>
+      <span class="pill">JavaScript (ES6)</span>
+      <span class="pill">Leaflet.js — web mapping library</span>
+      <span class="pill">Chart.js — data visualizations</span>
+      <span class="pill">OpenStreetMap tiles</span>
+      <span class="pill">CartoDB tile layers</span>
+      <span class="pill">ArcGIS World Imagery</span>
+      <span class="pill">GeoJSON — spatial data format</span>
+      <span class="pill">EPSG:4326 — WGS84 coordinate system</span>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <h2>Start exploring the data</h2>
+    <p>Open the interactive map to explore climate layers, identify at-risk regions, and measure distances across the globe.</p>
+    <a href="map.html" class="btn-primary">Open the GIS map →</a>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-brand">
+    <div class="nav-logo">ClimateMap</div>
+    <p>An educational GIS platform for exploring environmental and climate data.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Pages</h4>
+    <a href="index.html">Home</a>
+    <a href="map.html">Explore Map</a>
+    <a href="data.html">Data &amp; Charts</a>
+    <a href="about.html">About</a>
+  </div>
+  <div class="footer-col">
+    <h4>Data sources</h4>
+    <a href="#">NASA GISS</a>
+    <a href="#">NOAA Climate</a>
+    <a href="#">Global Forest Watch</a>
+    <a href="#">WMO</a>
+  </div>
+</footer>
+<div class="footer-bottom">© 2025 ClimateMap — Built as an educational GIS project</div>
+
+</body>
+</html>
