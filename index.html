@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ClimateMap — Environmental GIS Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1D9E75;--green-light:#E1F5EE;--green-dark:#085041;
+  --teal:#0F6E56;--amber:#EF9F27;--red:#E24B4A;
+  --bg:#0d1210;--bg2:#141a17;--bg3:#1a2420;
+  --text:#e8f0ed;--text2:#94b5a8;--text3:#5a7a6e;
+  --border:rgba(29,158,117,0.15);--border2:rgba(29,158,117,0.3);
+  --sans:'Inter',sans-serif;--serif:'Playfair Display',serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(13,18,16,0.85);backdrop-filter:blur(12px);border-bottom:0.5px solid var(--border);padding:0 40px;display:flex;align-items:center;height:60px;gap:32px}
+.nav-logo{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--green);letter-spacing:-0.5px}
+.nav-links{display:flex;gap:8px;margin-left:auto}
+.nav-links a{padding:6px 14px;border-radius:6px;font-size:13px;color:var(--text2);transition:all .2s}
+.nav-links a:hover{color:var(--text);background:var(--bg3)}
+.nav-links a.active{color:var(--green)}
+.nav-cta{background:var(--green);color:#fff;padding:7px 18px;border-radius:6px;font-size:13px;font-weight:500;transition:background .2s}
+.nav-cta:hover{background:var(--teal);color:#fff}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:100px 40px 60px;position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:0.4}
+.hero-glow{position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(29,158,117,0.12) 0%,transparent 70%);pointer-events:none}
+.hero-eyebrow{font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:8px}
+.hero-eyebrow::before{content:'';width:24px;height:1px;background:var(--green)}
+.hero h1{font-family:var(--serif);font-size:clamp(48px,7vw,88px);line-height:1.0;font-weight:900;max-width:820px;margin-bottom:28px;text-align:center}
+.hero h1 em{color:var(--green);font-style:normal}
+.hero-sub{font-size:18px;color:var(--text2);max-width:540px;line-height:1.7;margin-bottom:44px;text-align:center}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.btn-primary{background:var(--green);color:#fff;padding:14px 28px;border-radius:8px;font-size:14px;font-weight:500;transition:background .2s;display:inline-block}
+.btn-primary:hover{background:var(--teal);color:#fff}
+.btn-ghost{border:0.5px solid var(--border2);color:var(--text2);padding:14px 28px;border-radius:8px;font-size:14px;transition:all .2s;display:inline-block}
+.btn-ghost:hover{border-color:var(--green);color:var(--text)}
+.hero-stats{display:flex;gap:48px;margin-top:72px;padding-top:40px;border-top:0.5px solid var(--border);justify-content:center;flex-wrap:wrap}
+.stat-num{font-family:var(--serif);font-size:36px;font-weight:700;color:var(--text);line-height:1}
+.stat-label{font-size:13px;color:var(--text3);margin-top:4px}
+
+/* SECTIONS */
+section{padding:100px 40px}
+.section-eyebrow{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);margin-bottom:12px}
+.section-title{font-family:var(--serif);font-size:clamp(32px,4vw,48px);font-weight:700;line-height:1.15;margin-bottom:20px}
+.section-sub{font-size:16px;color:var(--text2);max-width:560px;line-height:1.8}
+
+/* FEATURES */
+.features{background:var(--bg2)}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--border);border:0.5px solid var(--border);border-radius:12px;overflow:hidden;margin-top:56px}
+.feature-card{background:var(--bg2);padding:32px;transition:background .2s}
+.feature-card:hover{background:var(--bg3)}
+.feat-icon{width:40px;height:40px;border-radius:8px;background:var(--green-light);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:20px}
+.feat-title{font-size:17px;font-weight:600;margin-bottom:10px;color:var(--text)}
+.feat-desc{font-size:14px;color:var(--text2);line-height:1.7}
+
+/* DATA HIGHLIGHTS */
+.data-section{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.data-visual{background:var(--bg3);border:0.5px solid var(--border);border-radius:12px;padding:32px;height:380px;display:flex;flex-direction:column;justify-content:space-between}
+.temp-chart{display:flex;align-items:flex-end;gap:8px;flex:1;padding-top:20px}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+.bar{width:100%;border-radius:3px 3px 0 0;transition:height .3s;min-height:4px}
+.bar-label{font-size:10px;color:var(--text3)}
+.chart-title{font-size:13px;color:var(--text2);font-weight:500;margin-bottom:4px}
+.chart-note{font-size:11px;color:var(--text3)}
+
+/* MAP PREVIEW */
+.map-section{background:var(--bg2)}
+.map-preview-wrap{margin-top:48px;border:0.5px solid var(--border);border-radius:12px;overflow:hidden;position:relative}
+.map-preview-bar{background:var(--bg3);border-bottom:0.5px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:8px}
+.win-dot{width:10px;height:10px;border-radius:50%}
+.map-embed{height:420px;background:#1a2820}
+
+/* ISSUES */
+.issues-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:56px}
+.issue-card{background:var(--bg3);border:0.5px solid var(--border);border-radius:12px;padding:28px;position:relative;overflow:hidden}
+.issue-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.issue-card.temp::before{background:var(--red)}
+.issue-card.sea::before{background:#378ADD}
+.issue-card.forest::before{background:var(--green)}
+.issue-card.extreme::before{background:var(--amber)}
+.issue-number{font-family:var(--serif);font-size:42px;font-weight:900;line-height:1;margin-bottom:8px}
+.issue-card.temp .issue-number{color:var(--red)}
+.issue-card.sea .issue-number{color:#378ADD}
+.issue-card.forest .issue-number{color:var(--green)}
+.issue-card.extreme .issue-number{color:var(--amber)}
+.issue-title{font-size:16px;font-weight:600;margin-bottom:8px}
+.issue-desc{font-size:13px;color:var(--text2);line-height:1.7}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.about-text p{color:var(--text2);line-height:1.85;margin-bottom:16px;font-size:15px}
+.about-facts{display:flex;flex-direction:column;gap:16px}
+.fact-row{background:var(--bg3);border:0.5px solid var(--border);border-radius:8px;padding:16px 20px;display:flex;align-items:center;gap:16px}
+.fact-icon{font-size:22px}
+.fact-text{font-size:14px;color:var(--text2)}
+.fact-text strong{color:var(--text);display:block;font-size:15px;margin-bottom:2px}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:0.5px solid var(--border);padding:48px 40px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px}
+.footer-brand .nav-logo{font-size:22px;margin-bottom:12px}
+.footer-brand p{font-size:13px;color:var(--text3);line-height:1.7;max-width:220px}
+.footer-col h4{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:14px}
+.footer-col a{display:block;font-size:13px;color:var(--text2);margin-bottom:8px;transition:color .2s}
+.footer-col a:hover{color:var(--green)}
+.footer-bottom{background:var(--bg2);padding:16px 40px;border-top:0.5px solid var(--border);text-align:center;font-size:12px;color:var(--text3)}
+
+@media(max-width:768px){
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .hero,.features,section{padding:80px 20px 60px}
+  .data-section,.about-grid{grid-template-columns:1fr}
+  footer{grid-template-columns:1fr;padding:40px 20px}
+  .hero-stats{gap:24px}
+  .footer-bottom{padding:16px 20px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">ClimateMap</span>
+  <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="map.html">Explore Map</a>
+    <a href="data.html">Data &amp; Charts</a>
+    <a href="about.html">About</a>
+  </div>
+  <a href="map.html" class="nav-cta">Open Map →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-eyebrow">Environmental GIS Platform</div>
+  <h1>Mapping our<br/><em>changing</em><br/>planet</h1>
+  <p class="hero-sub">An interactive geographic information system tracking climate change, deforestation, sea-level rise, and extreme weather events across the globe.</p>
+  <div class="hero-btns">
+    <a href="map.html" class="btn-primary">Explore the map</a>
+    <a href="data.html" class="btn-ghost">View climate data</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">+1.2°C</div>
+      <div class="stat-label">Global temp rise since 1880</div>
+    </div>
+    <div>
+      <div class="stat-num">3.3mm</div>
+      <div class="stat-label">Annual sea level rise</div>
+    </div>
+    <div>
+      <div class="stat-num">10M ha</div>
+      <div class="stat-label">Forest lost per year</div>
+    </div>
+    <div>
+      <div class="stat-num">420ppm</div>
+      <div class="stat-label">Atmospheric CO₂ today</div>
+    </div>
+  </div>
+</section>
+
+<!-- KEY ISSUES -->
+<section>
+  <div class="section-eyebrow" style="text-align:center">Key environmental issues</div>
+  <div class="section-title" style="text-align:center">The data speaks clearly</div>
+  <p class="section-sub" style="text-align:center;margin:0 auto 0">Our GIS layers visualize four of the most pressing environmental challenges of our time.</p>
+  <div class="issues-grid">
+    <div class="issue-card temp">
+      <div class="issue-number">+1.2°C</div>
+      <div class="issue-title">Rising Temperatures</div>
+      <p class="issue-desc">Global average temperatures have risen 1.2°C above pre-industrial levels, with the last decade being the warmest on record. The Arctic is warming 4× faster than the rest of the planet.</p>
+    </div>
+    <div class="issue-card sea">
+      <div class="issue-number">23 cm</div>
+      <div class="issue-title">Sea Level Rise</div>
+      <p class="issue-desc">Sea levels have risen 23 cm since 1880. Low-lying coastal nations and cities face growing flood risks. By 2100, sea levels may rise another 0.3–1 meter under current emissions trajectories.</p>
+    </div>
+    <div class="issue-card forest">
+      <div class="issue-number">−10M ha</div>
+      <div class="issue-title">Deforestation</div>
+      <p class="issue-desc">An area the size of Portugal is lost to deforestation every year. The Amazon, Congo Basin, and Southeast Asian forests are disappearing at alarming rates, releasing stored carbon and destroying biodiversity.</p>
+    </div>
+    <div class="issue-card extreme">
+      <div class="issue-number">×5</div>
+      <div class="issue-title">Extreme Weather</div>
+      <p class="issue-desc">Extreme weather events have increased fivefold over the last 50 years. Heat waves, floods, droughts, and wildfires are becoming more frequent and intense as the climate warms.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="section-eyebrow" style="text-align:center">Platform features</div>
+  <div class="section-title" style="text-align:center">Built for exploration</div>
+  <p class="section-sub" style="text-align:center;margin:0 auto 0">ClimateMap combines real-world environmental datasets with powerful GIS tools to help you understand spatial patterns in climate data.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feat-icon">🗺️</div>
+      <div class="feat-title">Interactive GIS Map</div>
+      <p class="feat-desc">Explore layered environmental data on an interactive map. Toggle between temperature anomalies, forest cover, sea-level projections, and more.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">📊</div>
+      <div class="feat-title">Data Visualizations</div>
+      <p class="feat-desc">Time-series charts and regional breakdowns help you see how climate indicators have changed over decades and how they vary across geography.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">📍</div>
+      <div class="feat-title">Location Analysis</div>
+      <p class="feat-desc">Click any location on the map to pull up climate statistics, historical trends, and risk scores for that specific region.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">🛰️</div>
+      <div class="feat-title">Satellite Basemaps</div>
+      <p class="feat-desc">Switch between street maps, topographic views, and satellite imagery to see land-use change and environmental features in their real-world context.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">📏</div>
+      <div class="feat-title">Measurement Tools</div>
+      <p class="feat-desc">Measure distances and areas affected by environmental events, from wildfire perimeters to flood inundation zones.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">📤</div>
+      <div class="feat-title">Export &amp; Share</div>
+      <p class="feat-desc">Save map views and data snapshots to use in reports, presentations, or research papers. Support for common GIS data formats.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DATA PREVIEW -->
+<section>
+  <div class="data-section">
+    <div>
+      <div class="section-eyebrow">Climate data</div>
+      <div class="section-title">140 years of warming</div>
+      <p class="section-sub" style="margin-bottom:28px">Temperature anomaly data from NASA GISS shows a clear upward trend since industrialisation began. Each year above the line is warmer than the 1951–1980 average.</p>
+      <a href="data.html" class="btn-primary">Explore all data →</a>
+    </div>
+    <div class="data-visual">
+      <div>
+        <div class="chart-title">Global Temperature Anomaly (°C) relative to 1951–1980 average</div>
+      </div>
+      <div class="temp-chart" id="temp-chart"></div>
+      <div class="chart-note">Source: NASA Goddard Institute for Space Studies (GISS)</div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP PREVIEW -->
+<section class="map-section">
+  <div class="section-eyebrow">Interactive map</div>
+  <div class="section-title">See the data on Earth</div>
+  <p class="section-sub">Our full-featured GIS viewer lets you explore climate layers anywhere on the planet.</p>
+  <div class="map-preview-wrap">
+    <div class="map-preview-bar">
+      <div class="win-dot" style="background:#E24B4A"></div>
+      <div class="win-dot" style="background:#EF9F27"></div>
+      <div class="win-dot" style="background:#1D9E75"></div>
+      <span style="font-size:12px;color:#5a7a6e;margin-left:8px">ClimateMap GIS Viewer</span>
+      <a href="map.html" style="margin-left:auto;font-size:12px;color:var(--green)">Open full map →</a>
+    </div>
+    <iframe src="map.html" class="map-embed" style="width:100%;border:none" title="ClimateMap GIS preview"></iframe>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="nav-logo">ClimateMap</div>
+    <p>An educational GIS platform for exploring environmental and climate data around the world.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Pages</h4>
+    <a href="index.html">Home</a>
+    <a href="map.html">Explore Map</a>
+    <a href="data.html">Data &amp; Charts</a>
+    <a href="about.html">About</a>
+  </div>
+  <div class="footer-col">
+    <h4>Data sources</h4>
+    <a href="#">NASA GISS</a>
+    <a href="#">NOAA Climate</a>
+    <a href="#">Global Forest Watch</a>
+    <a href="#">OpenStreetMap</a>
+  </div>
+</footer>
+<div class="footer-bottom">© 2025 ClimateMap — Built as an educational GIS project</div>
+
+<script>
+var tempData=[
+  {year:'1880',v:-0.16},{year:'1900',v:-0.08},{year:'1920',v:-0.27},{year:'1940',v:0.09},
+  {year:'1960',v:-0.01},{year:'1980',v:0.26},{year:'2000',v:0.42},{year:'2010',v:0.72},
+  {year:'2020',v:1.02},{year:'2023',v:1.17}
+];
+var min=-0.3,max=1.2,range=max-min;
+var chart=document.getElementById('temp-chart');
+if(chart){
+  tempData.forEach(function(d){
+    var pct=((d.v-min)/range*100);
+    var col=d.v>0?'#E24B4A':'#378ADD';
+    var wrap=document.createElement('div');
+    wrap.className='bar-wrap';
+    wrap.innerHTML='<div class="bar" style="height:'+pct+'%;background:'+col+';opacity:'+(0.5+pct/150)+'" title="'+d.year+': '+d.v+'°C"></div><div class="bar-label">'+d.year+'</div>';
+    chart.appendChild(wrap);
+  });
+}
+</script>
+</body>
+</html>
